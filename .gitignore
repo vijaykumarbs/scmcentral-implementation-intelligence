@@ -1,0 +1,42 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# Generated / temporary files
+*.tmp
+*.temp
+*.log
+
+# Local data
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated outputs
+examples/output/*
+!examples/output/.gitkeep
+
+# Local experiments
+experiments/output/
+
+# OS / tooling
+.python-version
