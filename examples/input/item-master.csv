@@ -1,0 +1,7 @@
+item_id,item_name,goods_service,item_type,hsn,category
+ITEM-001,Steel Bolt,Goods,RM,731815,Fasteners
+ITEM-002,Steel Nut,Goods,RM,,Fasteners
+ITEM-002,Steel Washer,Goods,RM,731822,Fasteners
+ITEM 004,Steel Plate,Goods,RM,7208,Metal
+ITEM-005,,Goods,RM,7308,Metal
+ITEM-006,Consulting,Service,Service,,Services
