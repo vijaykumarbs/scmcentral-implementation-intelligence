@@ -1,0 +1,37 @@
+{
+  "name": "Item Master",
+  "version": "0.1",
+  "fields": [
+    {
+      "name": "item_id",
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    {
+      "name": "item_name",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "goods_service",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "item_type",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "hsn",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "required": false
+    }
+  ]
+}
