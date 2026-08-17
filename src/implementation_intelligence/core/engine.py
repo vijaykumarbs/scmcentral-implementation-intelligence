@@ -6,6 +6,7 @@ from implementation_intelligence.core.validator import (
     Finding,
     validate_required_fields,
     validate_unique_fields,
+    validate_identifier_format,
 )
 
 
@@ -27,6 +28,13 @@ def validate(
 
     findings.extend(
         validate_unique_fields(
+            rows,
+            contract["fields"],
+        )
+    )
+
+    findings.extend(
+        validate_identifier_format(
             rows,
             contract["fields"],
         )

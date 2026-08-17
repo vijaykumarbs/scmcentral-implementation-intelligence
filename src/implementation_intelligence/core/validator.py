@@ -78,3 +78,35 @@ def validate_unique_fields(
                 seen[value] = row_number
 
     return findings
+
+
+def validate_identifier_format(
+    rows: list[dict[str, str]],
+    fields: list[dict],
+) -> list[Finding]:
+    findings: list[Finding] = []
+
+    identifier_fields = [
+        field["name"]
+        for field in fields
+        if field.get("name", "").endswith("_id")
+    ]
+
+    for row_number, row in enumerate(rows, start=2):
+        for field_name in identifier_fields:
+            value = row.get(field_name, "").strip()
+
+            if value and " " in value:
+                findings.append(
+                    Finding(
+                        row=row_number,
+                        field=field_name,
+                        rule="identifier_format",
+                        severity="error",
+                        message=(
+                            f"Identifier '{value}' contains spaces"
+                        ),
+                    )
+                )
+
+    return findings
