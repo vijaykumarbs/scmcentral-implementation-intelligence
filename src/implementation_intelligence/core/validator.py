@@ -110,3 +110,56 @@ def validate_identifier_format(
                 )
 
     return findings
+
+
+def validate_columns(
+    rows: list[dict[str, str]],
+    fields: list[dict],
+) -> list[Finding]:
+    findings: list[Finding] = []
+
+    contract_fields = {
+        field["name"]
+        for field in fields
+    }
+
+    input_fields = set(rows[0].keys()) if rows else set()
+
+    field_definitions = {
+        field["name"]: field
+        for field in fields
+    }
+
+    missing_fields = sorted(contract_fields - input_fields)
+    unexpected_fields = sorted(input_fields - contract_fields)
+
+    for field_name in missing_fields:
+        field = field_definitions[field_name]
+        required = field.get("required") is True
+
+        findings.append(
+            Finding(
+                row=1,
+                field=field_name,
+                rule="missing_column",
+                severity="error" if required else "warning",
+                message=(
+                    f"Required contract column '{field_name}' is missing"
+                    if required
+                    else f"Optional contract column '{field_name}' is missing"
+                ),
+            )
+        )
+
+    for field_name in unexpected_fields:
+        findings.append(
+            Finding(
+                row=1,
+                field=field_name,
+                rule="unexpected_column",
+                severity="warning",
+                message=f"Input column '{field_name}' is not defined in the contract",
+            )
+        )
+
+    return findings
