@@ -71,3 +71,16 @@ def test_missing_optional_column(tmp_path):
         and finding.severity == "warning"
         for finding in findings
     )
+
+
+def test_validate_with_rows_returns_input_rows():
+    from implementation_intelligence.core.engine import validate_with_rows
+
+    rows, findings = validate_with_rows(
+        "examples/contracts/item-master.contract.json",
+        "examples/input/item-master.csv",
+    )
+
+    assert len(rows) == 6
+    assert rows[0]["item_id"] == "ITEM-001"
+    assert len(findings) == 3
