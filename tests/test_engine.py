@@ -29,3 +29,45 @@ def test_item_master_sample():
         and finding.row == 5
         for finding in findings
     )
+
+
+def test_missing_required_column(tmp_path):
+    input_file = tmp_path / "missing-required.csv"
+
+    input_file.write_text(
+        "item_id,goods_service,item_type,hsn,category\n"
+        "ITEM-001,Goods,RM,731815,Fasteners\n"
+    )
+
+    findings = validate(
+        "examples/contracts/item-master.contract.json",
+        input_file,
+    )
+
+    assert any(
+        finding.rule == "missing_column"
+        and finding.field == "item_name"
+        and finding.severity == "error"
+        for finding in findings
+    )
+
+
+def test_missing_optional_column(tmp_path):
+    input_file = tmp_path / "missing-optional.csv"
+
+    input_file.write_text(
+        "item_id,item_name,goods_service,item_type,category\n"
+        "ITEM-001,Steel Bolt,Goods,RM,Fasteners\n"
+    )
+
+    findings = validate(
+        "examples/contracts/item-master.contract.json",
+        input_file,
+    )
+
+    assert any(
+        finding.rule == "missing_column"
+        and finding.field == "hsn"
+        and finding.severity == "warning"
+        for finding in findings
+    )
