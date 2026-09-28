@@ -1,35 +1,59 @@
-# SCM Central — Product brief
+# SCM Central — Implementation Intelligence product plan
 
-## Problem and evidence
+## What it does
 
-In SCM-oriented ERP programs, customer master data is often delivered as CSV/spreadsheet extracts whose structure and quality vary by source. Analysts compare each extract with a target contract, repair missing/duplicate identifiers, and coordinate clarification with business owners through spreadsheets and email. This can make the same checks hard to repeat and leave file readiness dependent on individual analyst practice.
+The current tool takes a CSV file and a JSON file that lists the target fields and rules. It checks required fields, duplicate values, spaces in identifiers, and missing or unexpected columns. It returns a list of problems and a copy of the CSV with each problem marked beside its row.
 
-The repository contains an illustrative item-master sample and deterministic prototype. It does not yet contain participant interviews, customer artifacts, or a completed pilot. Rework and handoff delay are problem hypotheses, not measured outcomes.
+It does not fix the data or load it into an ERP. It checks only the rules written in the JSON file.
 
-## Prioritization
+## Who it is for
 
-Start with a narrow decision-support slice: explicit target contract, deterministic checks, structured findings with row/field evidence, and an annotated output that analysts can use in their existing resolution process. Prioritize missing/required fields, duplicates, identifier format, and unexpected columns because these can block or complicate load preparation. Avoid broad “readiness scores” that could imply more certainty than the rules support.
+An ERP/SCM data analyst preparing item-master data and a data owner who must correct or explain the source records.
 
-## Success criteria / pilot
+## The problem
 
-Run with one data analyst and one data owner on an approved, representative item-master extract with a manually reviewed reference set. Capture:
+Before loading master data, an analyst compares each source file with the fields the ERP expects. Teams often do this with spreadsheet formulas, manual checks, and follow-up messages. Each analyst may check the file differently, and a data owner may receive an issue without enough information to find the row.
 
-- elapsed analyst time to identify, classify, and route all blocking findings;
-- precision and recall against the agreed reference set;
-- number of findings with enough row/field context for the owner to act without a clarification loop;
-- false confidence: rows marked clear by the tool that the reference review considers unsafe;
-- analyst and data-owner feedback on whether annotated CSV fits the current control process.
+This describes the problem the tool aims to solve. The example file is sample data. No customer trial, measured time savings, or error reduction has been reported.
 
-Set acceptable thresholds with participants before looking at results. The core safety bar is that the tool must not hide a known blocking issue or label a file “ready” beyond the contract rules. Report sample size, contract scope, and limitations; do not claim general ERP readiness from a single pilot.
+## First version
 
-## Deferred
+1. Write the expected fields and rules in a JSON contract.
+2. Run the command-line tool with the contract and a CSV file.
+3. Review the problems found, including the row and field.
+4. Send the marked CSV to the person who owns the source data for correction or clarification.
 
-- readiness percentages, inferred or semantic rules, and AI recommendations;
-- automated remediation or customer-data mutation;
-- workflow, ownership routing, audit history, and team collaboration;
-- ERP connectors, import automation, databases, and generic plugin frameworks;
-- broad master-data coverage before validating the item-master workflow.
+The current checks are fixed and predictable. They do not use AI, check business meaning, look up values online, or change input records.
 
-## Learning goals
+## Why this scope
 
-Learn which findings drive most rework, which ones analysts can fix versus must clarify with the customer, whether duplicate rows and conflicting duplicates require distinct treatment, what evidence owners need, and where the contract itself is ambiguous. Use those findings to decide if the next increment should be resolution classification or an improved input/contract workflow.
+Start with checks that can be stated clearly in the target contract: required fields, duplicate values, simple identifier format, and expected columns. Show each issue beside the affected row so the analyst can pass it to the right person. Do not report a percentage score: passing these checks does not prove that all data is correct.
+
+## Not included
+
+- saying that a file is ready for an ERP load;
+- deciding whether an issue is the analyst's or customer's responsibility;
+- recommending or applying data corrections;
+- checking whether values make business sense;
+- ERP connections, import jobs, user accounts, or issue tracking.
+
+## Pilot and measures
+
+**Status: no pilot run yet.** Use an approved item-master file and a list of problems reviewed by an analyst and data owner. Time the normal spreadsheet check and the tool-assisted check on the same task or on similar files.
+
+Record:
+
+- minutes spent finding and sharing problems;
+- known problems found and missed;
+- incorrect problems reported;
+- problems that include enough row and field detail to act on;
+- follow-up messages needed before the owner can respond.
+
+Agree what counts as an acceptable result before the trial. Investigate every known problem the tool misses. Passing the tool's checks must never be described as proof that a file is safe to load. Do not publish customer files or claim savings without measured results and permission.
+
+## Questions to answer
+
+- Which checks catch the most real problems?
+- Which problems can the analyst fix, and which need the data owner?
+- Are duplicate rows and conflicting records handled differently by the team?
+- Does the marked CSV fit the team's current review process?
