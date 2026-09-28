@@ -4,7 +4,7 @@ ERP data migration work often starts with a contract in one place and customer-o
 
 SCM Central is a provider-agnostic validation utility for making those readiness checks explicit and repeatable. A target data contract and source CSV produce structured findings and an annotated CSV. The current MVP is deterministic: it does not call an LLM, change customer records, or make the final go/no-go decision for a migration.
 
-The first product question is not whether a rules engine can be made more general. It is whether analysts can classify and resolve real data findings faster without hiding uncertainty. See [PRODUCT.md](PRODUCT.md) for problem evidence, prioritization, pilot criteria, deferred scope, and learning goals; see [architecture](docs/architecture.md) for system boundaries.
+The first product question is not whether a rules engine can be made more general. It is whether analysts can classify and resolve real data findings faster without hiding uncertainty. See [PRODUCT.md](PRODUCT.md) for problem evidence, prioritization, pilot criteria, deferred scope, and learning goals; see the [pilot protocol](docs/pilot-protocol.md) for a ready-to-run evaluation worksheet; see [architecture](docs/architecture.md) for system boundaries.
 
 **Evidence status:** no completed implementation-team pilot or measured time/quality outcome is recorded yet. The sample item-master data is illustrative, not customer data. Treat the proposed value as a hypothesis until the pilot criteria are measured.
 
